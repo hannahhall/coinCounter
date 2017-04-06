@@ -1,7 +1,9 @@
 var coinPurse= {};
 var leftover;
+var button = document.getElementById("button");
+var clear = document.getElementById("clear");
 
-coinCounter= function(amount) {
+function coinCounter(amount) {
 	if (amount%0.25===0) {
 		coinPurse.quarters= amount/0.25;
 	} else {
@@ -17,7 +19,7 @@ coinCounter= function(amount) {
 		leftover= leftover.toFixed(2);
 	}
 	if (leftover%0.05===0 && leftover>=0.05) {
-		coinPurse.nickes= Math.floor(leftover/0.05);
+		coinPurse.nickles= Math.floor(leftover/0.05);
 	} else if (leftover>=0.05) {
 		coinPurse.nickles= Math.floor(leftover/0.05);
 		leftover-= coinPurse.nickles*0.05;
@@ -26,8 +28,22 @@ coinCounter= function(amount) {
 	if (leftover<0.05) {
 		coinPurse.penny= Math.floor(leftover/0.01);
 	}
+	console.log(coinPurse);
+	for(coin in coinPurse) {
+			console.log(coin + ": " + coinPurse[coin]);
+			document.getElementById("counter").innerHTML+= "<p>" + coin + ": " + coinPurse[coin]+ "</p>";
+
+	}
+}
+function determineChange (clickEvent) {
+	coinCounter(document.getElementById("input").value);
+}
+function clearForm (clickEvent) {
+	document.getElementById("input").reset();
 }
 
-coinCounter(2.34);
-console.log(coinPurse);
+button.addEventListener("click", determineChange);
+clear.addEventListener("click", clearForm);
+
+
 
